@@ -11,10 +11,7 @@ services:
     volumes:
       - postgres-db:/data/postgres
   sdp-api:
-    image: stellar/sdp-v2:development
-    build:
-      context: ../
-      dockerfile: Dockerfile.development
+    image: ${esatya:-stellar/sdp-v2:development}
     ports:
       - "${PORT:-8000}:${PORT:-8000}"
       - "${METRICS_PORT:-8002}:${METRICS_PORT:-8002}"

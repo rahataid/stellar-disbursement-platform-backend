@@ -141,10 +141,43 @@ cd dev
 docker compose up -d
 ```
 
+If you want Compose to use already-pulled images and skip local rebuilds, run:
+
+```sh
+cd dev
+docker compose up -d --no-build
+```
+
+Or from the repo root, use the helper target:
+
+```sh
+make docker-up-no-build
+```
+
 To stop the services:
 ```sh
 docker compose down
 ```
+
+If you want Docker images to be built and pushed automatically from CI, add these GitHub secrets:
+
+- `DOCKERHUB_USERNAME`
+- `DOCKERHUB_TOKEN`
+- `DOCKERHUB_REPO`
+
+The workflow `/.github/workflows/dockerhub-build-push.yml` will build and push:
+
+- `${DOCKERHUB_REPO}:development`
+- `${DOCKERHUB_REPO}:latest`
+
+Then override the default compose images with:
+
+```sh
+SDP_API_IMAGE=yourrepo/sdp-v2:development
+TSS_IMAGE=yourrepo/sdp-v2:latest
+```
+
+Use the overrides in `dev/.env` or export them before running `docker compose up -d`.
 
 #### Option 3: Running Locally with Go (Development)
 

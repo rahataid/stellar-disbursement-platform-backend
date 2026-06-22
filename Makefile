@@ -19,6 +19,10 @@ export PATH := $(GOPATH_BIN):$(PATH)
 docker-build:
 	$(SUDO) docker build -f Dockerfile.development --pull --label org.opencontainers.image.created="$(BUILD_DATE)" -t $(TAG) --build-arg GIT_COMMIT=$(LABEL) .
 
+docker-up-no-build:
+	@echo "Running Docker Compose without local builds"
+	@docker compose -f dev/docker-compose.yml up -d --no-build
+
 docker-push:
 	$(SUDO) docker push $(TAG)
 

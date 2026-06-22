@@ -1,10 +1,7 @@
 version: '3.8'
 services:
   sdp-tss:
-    image: stellar/sdp-v2:latest
-    build:
-      context: ../
-      dockerfile: Dockerfile
+    image: ${esatya:-stellar/sdp-v2:latest}
     ports:
       - "9000:9000"
     environment:
