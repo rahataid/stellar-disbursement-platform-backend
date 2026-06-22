@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres-db:/data/postgres
   sdp-api:
-    image: ${esatya:-stellar/sdp-v2:development}
+    image: esatya/stellar-sdp-v2:dev
     ports:
       - "${PORT:-8000}:${PORT:-8000}"
       - "${METRICS_PORT:-8002}:${METRICS_PORT:-8002}"
