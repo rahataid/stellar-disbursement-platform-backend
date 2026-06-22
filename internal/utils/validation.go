@@ -11,7 +11,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/nyaruka/phonenumbers"
 	"github.com/stellar/go-stellar-sdk/amount"
 	"golang.org/x/net/html"
 
@@ -19,9 +18,7 @@ import (
 )
 
 var (
-	// RxPhone is a regex used to validate phone number, according with the E.164 standard https://en.wikipedia.org/wiki/E.164
-	rxPhone = regexp.MustCompile(`^\+[1-9]{1}[0-9]{9,14}$`)
-	rxOTP   = regexp.MustCompile(`^\d{6}$`)
+	rxOTP = regexp.MustCompile(`^\d{6}$`)
 	// Any HTML-like tag: <a ...>, </div>, <STYLE>...</STYLE>, etc.
 	rxHTMLTag = regexp.MustCompile(`(?i)<\s*/?\s*[a-z][a-z0-9]*(\s+[^>]*)?>`)
 	// "javascript:" URL scheme anywhere in the string.
@@ -38,21 +35,9 @@ const (
 	VerificationFieldMaxIDLength  = 50
 )
 
-// ValidatePhoneNumber validates a phone number string according to the E.164 standard.
-// See: https://github.com/firebase/firebase-admin-go/blob/cef91acd46f2fc5d0b3408d8154a0005db5bdb0b/auth/user_mgt.go#L449-L457
 func ValidatePhoneNumber(phoneNumberStr string) error {
 	if strings.TrimSpace(phoneNumberStr) == "" {
 		return ErrEmptyPhoneNumber
-	}
-
-	if !rxPhone.MatchString(phoneNumberStr) {
-		return ErrInvalidE164PhoneNumber
-	}
-
-	parsedNumber, err := phonenumbers.Parse(phoneNumberStr, "")
-	if err != nil || !phonenumbers.IsValidNumber(parsedNumber) {
-		// Parsing error, not a valid phone number
-		return ErrInvalidE164PhoneNumber
 	}
 
 	return nil

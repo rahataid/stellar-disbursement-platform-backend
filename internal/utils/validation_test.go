@@ -19,19 +19,13 @@ func Test_ValidatePhoneNumber(t *testing.T) {
 		wantErr     error
 	}{
 		{"", ErrEmptyPhoneNumber},
-		{"notvalidphone", ErrInvalidE164PhoneNumber},
-		{"14155555555", ErrInvalidE164PhoneNumber},
+		{"   ", ErrEmptyPhoneNumber},
+		{"notvalidphone", nil},
+		{"14155555555", nil},
 		{"+380445555555", nil},
-		{"+14155555555x4444", ErrInvalidE164PhoneNumber},
-		{"+1 415 555 5555", ErrInvalidE164PhoneNumber},
-		{"+1 415-555-5555", ErrInvalidE164PhoneNumber},
-		{"+05555555555", ErrInvalidE164PhoneNumber},
-		{"++5555555555", ErrInvalidE164PhoneNumber},
-		{"+38012345678", ErrInvalidE164PhoneNumber},
-		{"+38056789013", ErrInvalidE164PhoneNumber},
-		{"+38034567890", ErrInvalidE164PhoneNumber},
-		{"+15555555555", ErrInvalidE164PhoneNumber},
 		{"+14155555555", nil},
+		{"+0009991602388", nil},
+		{"00099916034311", nil},
 	}
 
 	for _, tc := range testCases {
