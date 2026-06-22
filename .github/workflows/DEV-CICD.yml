@@ -12,6 +12,7 @@ permissions:
 env:
   DOCKERHUB_REPO: esatya/stellar-sdp-v2
 
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
